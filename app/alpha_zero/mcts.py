@@ -143,7 +143,7 @@ class MCTS:
         Actions with zero visits (invalid or unexplored) have pi=0.
         """
         root = MCTSNode()
-        root_value = self._expand(root, snake)
+        self._expand(root, snake)
 
         if root.is_terminal or not root.children:
             # Already over or completely boxed in
@@ -154,10 +154,11 @@ class MCTS:
 
         # Add Dirichlet noise to root's child priors (exploration)
         actions = list(root.children.keys())
-        noise = np.random.dirichlet([self.dirichlet_alpha] * len(actions))
-        for i, a in enumerate(actions):
-            c = root.children[a]
-            c.P = (1 - self.dirichlet_eps) * c.P + self.dirichlet_eps * noise[i]
+        if self.dirichlet_eps > 0.0 and self.dirichlet_alpha > 0.0 and actions:
+            noise = np.random.dirichlet([self.dirichlet_alpha] * len(actions))
+            for i, a in enumerate(actions):
+                c = root.children[a]
+                c.P = (1 - self.dirichlet_eps) * c.P + self.dirichlet_eps * noise[i]
 
         # Run simulations
         for _ in range(self.num_simulations):
