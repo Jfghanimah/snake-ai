@@ -1,6 +1,6 @@
 import pygame
-from environment import Snake
-from snake_bot import SnakeBot
+from app.environment import Snake
+from app.snake_bot import SnakeBot
 import sys
 
 snake_env = Snake(18, 18)  # Create a 10x10 snake env map

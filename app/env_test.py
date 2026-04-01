@@ -1,5 +1,5 @@
-from environment import Snake
-from snake_bot import SnakeBot
+from app.environment import Snake
+from app.snake_bot import SnakeBot
 
 
 snake = Snake(8,8)
